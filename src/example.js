@@ -1,14 +1,13 @@
 /**
  * Created by anokhin on 20.04.2018.
  */
-
+import {createShader, attribute, uniform,uniformArrayArgument, core, uniformArgument, glsl, grid2DInt as grid} from './index.js';
 
 
 const matrixMul10x10 = createShader(
-    attribute("i", glsl.INT, new Int32Array(100)),
-    attribute("j", glsl.INT, new Int32Array(100)),
-    attribute("A", glsl.FLOAT, 100),
-    uniform("B", glsl.FLOAT, 100),
+    grid("i","j",100,100),
+    uniformArrayArgument("A", glsl.FLOAT, 100),
+    uniformArrayArgument("B", glsl.FLOAT, 100),
     core(glsl.FLOAT, `
    
        int index(int i, int j){
@@ -28,11 +27,10 @@ const matrixMul10x10 = createShader(
 matrixMul10x10(A, B);
 
 const matrixSquareMul = createShader(
-    attribute("i", glsl.INT, A => createFirstSquareIndexes(A.length)),
-    attribute("j", glsl.INT, A => createSecondSquaredIndexes(A.length)),
+    grid("i", "j",A=>A.length, A=>A.length),
     uniform("size", glsl.INT, A => Math.sqrt(A.length)),
-    uniformArgument("A", glsl.FLOAT, A => A.length),
-    uniformArgument("B", glsl.FLOAT, A => A.length),
+    uniformArrayArgument("A", glsl.FLOAT, A => A.length),
+    uniformArrayArgument("B", glsl.FLOAT, A => A.length),
     core(glsl.FLOAT, `
        int index(int i, int j){
           return i*size+j;
@@ -51,17 +49,16 @@ const matrixSquareMul = createShader(
 matrixSquareMul(A, B);
 
 const matrixMul = createShader(
-    attribute("i", glsl.INT, (A, B, n, k) => createFirstIndexes(n, k)),
-    attribute("j", glsl.INT, (A, B, n, k, m) => createSecondIndexes(k, m)),
-    uniformArgument("A", glsl.FLOAT, (A, B, n, k) => n * k),
-    uniformArgument("B", glsl.FLOAT, (A, B, n, k, m) => k * m),
+    grid("i", "j", (A, B, n) => n, (A, B, n, l, m)=>m),
+    uniformArrayArgument("A", glsl.FLOAT, (A, B, n, k) => n * k),
+    uniformArrayArgument("B", glsl.FLOAT, (A, B, n, k, m) => k * m),
     uniformArgument("n", glsl.INT),
     uniformArgument("k", glsl.INT),
     uniformArgument("m", glsl.INT),
     core(glsl.FLOAT, `
        int indexA(int i, int j){
           return i*k+j;
-       }
+       }Array
        
        int indexB(int i, int j){
          return i*m+j;
