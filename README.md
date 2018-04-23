@@ -1,9 +1,9 @@
-#Shader.js
+# Shader.js
 
 Light-weight library for parallel computations on GPU in browser. Based on WebGl 1.0.
 Current version - 0.0.1. NOT READY FOR ANY USE YET.
 
-#API
+# API
 
 
 ## Methods
@@ -45,7 +45,7 @@ Current version - 0.0.1. NOT READY FOR ANY USE YET.
     each kernels), type - glsl type, name - identifier of variable available in glslCode, size - array length. size might be *setter*.
     Value of corresponding glsl variable will be read from *shader-function* arguments.
     
-##Types
+## Types
 
  Library support setting of *float* and *int* parameters and return types.
  
@@ -61,7 +61,7 @@ Current version - 0.0.1. NOT READY FOR ANY USE YET.
   separated to different *shader-functions* and than aggregated in another *shader-funciton*. (Impossible
   to fix at all because of WebGL 1.0 constraints).
  
-##Examples
+## Examples
 
 10x10 matrix multiplication:
 
