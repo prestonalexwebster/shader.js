@@ -1,7 +1,7 @@
 /**
  * Created by anokhin on 20.04.2018.
  */
-
+import {glslMod, encodeFloat, encodeInt} from './encoders';
 
 const ATTRIBUTE_PARAMETER = 'ATTRIBUTE_PARAMETER';
 const ATTRIBUTE_ARGUMENT = 'ATTRIBUTE_ARGUMENT';
@@ -117,33 +117,10 @@ function generateDeclaration(variable){
 function generateShaderHeader(variables){
     return `varying v_color;\n${variables.map(v=>generateDeclaration(v)).join('\n')}`;
 }
-//think about float encoding
-const floatColorMap = `
-vec4 __color_map__(float z){
-   if(z == 0.0){
-       return vec4(0.0,0.0,0.0,1.0);
-   }
-   float sign = 1.0;
-   if(z > 0.0){
-       sign = -1.0;
-   }
-   if(sign == -1.0){
-       z = -z;
-   }
-   float exponent = ceil(log2(z));
-   float k = sign*z/exponent;
-   return vec4(r/255.0,g/255.0,b/255.0,1.0);
-}
-`;
-//think about int encoding
-const intColorMap = `
-vec4 __color_map__(int n){
-   float b = float(mod(n,256));
-   float g = float(mod(n/256,256));
-   float r = float(mod(n/256/256,256));
-   return vec4(r/255.0,g/255.0,b/255.0,1.0);
-}
-`;
+
+
+const floatColorMap = `${glslMod}\n${encodeFloat}\n`;
+const intColorMap = `${glslMod}\n${encodeInt}\n`;
 
 function generateShaderBody(core){
     return `${core.source}

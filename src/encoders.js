@@ -5,7 +5,7 @@ function exp2(value){
     return Math.pow(2,value);
 }
 
-const glslMod = `
+export const glslMod = `
 
 int mod(int a, int b){
     return a - (a/b)*b;
@@ -51,8 +51,8 @@ function encodeReducedFloat({mantissa, exp, negative, expNegative}){
 }
 
 /**********************decode float to 3-bytes GLSL*************************************************************************/
-const encodeFloat = `
-vec4 __encode_float__(float f){
+export const encodeFloat = `
+vec4 __color_map__(float f){
     float exp_bits = 7.0;
     float mantissa_bits = 13.0;
     float min_norm_exp = -pow(2.0,exp_bits);
@@ -96,7 +96,7 @@ vec4 __encode_float__(float f){
 
 /**********************3-byte float to float**************************************************************************/
 
-function decodeReducedFloat(bytes){
+export function decodeReducedFloat(bytes){
     let fb = bytes[0];
     let negative = false;
     if(fb >= 128){
@@ -113,7 +113,7 @@ function decodeReducedFloat(bytes){
     return {negative, exp, mantissa,expNegative};
 }
 
-function getFloat({mantissa, exp, negative, expNegative}){
+export function getFloat({mantissa, exp, negative, expNegative}){
     let denormalized = exp == 0;
     let exponent = expNegative ? exp - 127 : exp;
     let expMultiplier = mantissa/exp2(13) + (denormalized ? 0 : 1);
@@ -136,8 +136,8 @@ function encodeInt(n){
     return bytes;
 }
 
-const encodeInt = `
-vec4 __encode_int__(int n){
+export const encodeInt = `
+vec4 __color_map__(int n){
     bool sign = n < 0;
     int value = n;
     if(sign){
@@ -167,7 +167,7 @@ vec4 __encode_int__(int n){
 
 /********************************3-byte to int*************************************************************************/
 
-function decodeInt(bytes){
+export function decodeInt(bytes){
     let fb = bytes[0];
     let sign = false;
     if(fb >= 128){

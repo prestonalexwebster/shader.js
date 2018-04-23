@@ -1,6 +1,7 @@
 /**
  * Created by anokhin on 20.04.2018.
  */
+import {decodeReducedFloat, getFloat, decodeInt} from './encoders.js';
 
 const ATTRIBUTE_PARAMETER = 'ATTRIBUTE_PARAMETER';
 const ATTRIBUTE_ARGUMENT = 'ATTRIBUTE_ARGUMENT';
@@ -130,12 +131,12 @@ export class WebGlRunner {
     }
 }
 
-function getFloat(r,g,b){
-    return r*256*256+g*256+b;
+function extractFloat(bytes){
+    return getFloat(decodeReducedFloat(bytes));
 }
 
-function getInt(r,g,b){
-    return parseInt(r*255)*256*256+parseInt(g*255)*256*256+parseInt(b*255);
+function extractInt(bytes){
+    return decodeInt(bytes);
 }
 
 function extractValues(gl, type){
@@ -145,7 +146,7 @@ function extractValues(gl, type){
     gl.readPixels(0,0,w, h,gl.RGBA,gl.UNSIGNED_BYTE,pix);
     const values = (type === glsl.FLOAT ? new Float32Array(w*h) : new Int32Array(w*h));
     for(let i = 0; i*4 < pix.length; ++i){
-        values[i] = (type === glsl.FLOAT ? getFloat(pix[i*4],pix[i*4+1],pix[i*4+2]) : getInt(pix[i*4],pix[i*4+1],pix[i*4+2]));
+        values[i] = (type === glsl.FLOAT ? extractFloat([pix[i*4],pix[i*4+1],pix[i*4+2]]) : extractInt([pix[i*4],pix[i*4+1],pix[i*4+2]]));
     }
     return values;
 }
