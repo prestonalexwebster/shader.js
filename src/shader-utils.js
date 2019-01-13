@@ -4,9 +4,7 @@
 import {decodeReducedFloat, getFloat, decodeInt} from './encoders.js';
 import {glsl, ATTRIBUTE_PARAMETER, ATTRIBUTE_ARGUMENT, UNIFORM_PARAMETER, UNIFORM_ARRAY_PARAMETER, UNIFORM_ARGUMENT,UNIFORM_ARRAY_ARGUMENT}
 from './constants.js';
-
-
-
+import {WebGlCompiler,WebGlRunner} from "./webgl-utils";
 
 function extractFloat(bytes){
     return getFloat(decodeReducedFloat(bytes));

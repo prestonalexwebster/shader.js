@@ -3,7 +3,6 @@
  */
 import {glslMod, encodeFloat, encodeInt} from './encoders';
 import {
-    glsl,
     ATTRIBUTE_PARAMETER,
     ATTRIBUTE_ARGUMENT,
     UNIFORM_PARAMETER,
@@ -12,11 +11,14 @@ import {
     UNIFORM_ARRAY_ARGUMENT,
     CORE_SOURCE,
     GRID_2D_INT,
+    glsl,
     gl,
     shadowCanvas
 }
     from './constants.js';
+import {ShaderCompiler, ShaderRunner} from "./shader-utils";
 
+export {glsl} from './constants.js';
 
 const argMarks = new Set([
     ATTRIBUTE_ARGUMENT,
@@ -35,8 +37,7 @@ const attributeMarks = new Set([
 ]);
 
 
-export
-glsl;
+
 
 const shaderCompiler = new ShaderCompiler(gl);
 const shaderRunner = new ShaderRunner(gl);
@@ -163,12 +164,12 @@ function generateIndexes(name, axis, maxX, maxY) {
     const indexes = new Int32Array(maxX * maxY);
     for (let y = 0; y < maxY; ++y) {
         for (let x = 0; x < maxX; ++x) {
-            indexes[y * maxX + x] = axis == 'x' ? x : y;
+            indexes[y * maxX + x] = axis === 'x' ? x : y;
         }
     }
     return {
         name,
-        scale: axis == 'x' ? maxX : maxY,
+        scale: axis === 'x' ? maxX : maxY,
         value: indexes,
         type: glsl.INT
     };
@@ -204,7 +205,7 @@ function configureShadowCanvas(grid){
 
 export function createShader(...rest) {
     const args = rest.filter(a => argMarks.has(a._mark));
-    const params = rest.filter(a => !argMarks.has(a._mark) && a._mark !== CORE_SOURCE && a._mark != GRID_2D_INT);
+    const params = rest.filter(a => !argMarks.has(a._mark) && a._mark !== CORE_SOURCE && a._mark !== GRID_2D_INT);
     const grid = rest.find(a => a._mark === GRID_2D_INT);
     const core = rest.find(a => a._mark === CORE_SOURCE);
     return function (...rest) {

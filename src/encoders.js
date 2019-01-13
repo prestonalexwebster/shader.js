@@ -17,7 +17,7 @@ int mod(int a, int b){
 /**********************decode float to 3-bytes JS*************************************************************************/
 
 function decomposeFloat(value, mantissaBits=13, expBits=7){
-    const minNormalizedExp = -exp2(expBits);
+    //const minNormalizedExp = -exp2(expBits);
     const mantissaModule = exp2(mantissaBits);
     const negative = value < 0;
     let exp = Math.floor(Math.log2(value));
