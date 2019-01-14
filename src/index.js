@@ -8,6 +8,7 @@ const createEyeMatrix = n => {
         const index = i*n + i;
         matrix[index] = 1;
     }
+    return matrix;
 };
 
 const A = createEyeMatrix(10);

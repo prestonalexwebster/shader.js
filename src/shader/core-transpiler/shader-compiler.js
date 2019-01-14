@@ -1,14 +1,5 @@
 import {WebGlCompiler} from "../webgl/webgl-compiler";
-
-const fragmentGlsl =
-`
-precision mediump float;
-varying vec4 v_color;
-
-void main(){
-    gl_FragColor = v_color;
-}
-`;
+import Fragment from "../components/fragment/fragment";
 
 export class ShaderCompiler {
 
@@ -16,8 +7,8 @@ export class ShaderCompiler {
         this.gl = gl;
     }
 
-    compile(code) {
-        this.webglCompiler = new WebGlCompiler(this.gl, code, fragmentGlsl);
+    compile(Vertex) {
+        this.webglCompiler = new WebGlCompiler(this.gl, Vertex, Fragment);
     }
 
     getProgram() {

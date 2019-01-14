@@ -3,7 +3,7 @@ import GetPosition from "../get-position/get-position";
 import ShaderBody from "../shader-body/shader-body";
 
 
-const VertexCode = (programParams, gridParams, core) =>
+const Vertex = (programParams, gridParams, core) =>
 `
 ${ShaderHeader(programParams)}
 
@@ -12,4 +12,4 @@ ${GetPosition(gridParams)}
 ${ShaderBody(core)}
 `;
 
-export default VertexCode;
+export default Vertex;

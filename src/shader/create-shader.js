@@ -1,7 +1,7 @@
 /**
  * Created by anokhin on 20.04.2018.
  */
-import VertexCode from './components/vertex-code/vertex-code';
+import Vertex from './components/vertex/vertex';
 import {
     ATTRIBUTE_ARGUMENT,
     CORE_SOURCE,
@@ -13,7 +13,7 @@ import {
 } from './core-transpiler/constants.js';
 import {ShaderRunner} from "./core-transpiler/shader-runner";
 import {ShaderCompiler} from "./core-transpiler/shader-compiler";
-import {bridge, computeArg, computeParam} from "./bridge";
+import {generateGrid, computeArg, computeParam} from "./bridge";
 
 
 
@@ -41,9 +41,9 @@ export function createShader(...rest) {
     const grid = rest.find(a => a._mark === GRID_2D_INT);
     const core = rest.find(a => a._mark === CORE_SOURCE);
     return function (...rest) {
-        const gridParams = bridge(grid, rest);
+        const gridParams = generateGrid(grid, rest);
         const programParams = [...gridParams, ...params.map(p => computeParam(p, rest)), ...args.map((a, i) => computeArg(a, rest, i))];
-        const shaderCode = VertexCode(programParams, gridParams, core);
+        const shaderCode = Vertex(programParams, gridParams, core);
         configureShadowCanvas(gridParams);
         shaderCompiler.compile(shaderCode);
         shaderRunner.run(shaderCompiler.getProgram(), programParams, core);

@@ -3,7 +3,7 @@ import VariableDeclaration from './variable-declaration';
 
 const ShaderHeader = variables =>
 `
-varying v_color;
+varying vec4 v_color;
 
 ${variables.map(v => VariableDeclaration(v)).join('\n')}
 `;

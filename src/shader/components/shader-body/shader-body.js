@@ -10,8 +10,8 @@ ${core.source}
 ${core.type === glsl.FLOAT ? FloatColorMap : IntColorMap}
      
 void main(){
-    v_color = __color_map__(core());
-    gl_Position = __get_position__();
+    v_color = _color_map_(core());
+    gl_Position = _get_position_();
     gl_PointSize = 1.0;
 }
 `;

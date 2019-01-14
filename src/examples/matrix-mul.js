@@ -6,17 +6,17 @@ import {core, createShader, glsl, grid2DInt, uniformArgument, uniformArrayArgume
 const MatrixMul =
 `
 int indexA(int i, int j){
-    return i*k+j;
+    return i * k + j;
 }
        
 int indexB(int i, int j){
-    return i*m+j;
+    return i * m + j;
 }
    
 float core(){
-    float c = 0;
+    float c = 0.0;
     for(int q = 0; q < k; ++q){
-        c = c + A[index(i,q)]*B[index(q,j)];
+        c = c + A[index(i, q)]*B[index(q, j)];
     }
     return c;
 }

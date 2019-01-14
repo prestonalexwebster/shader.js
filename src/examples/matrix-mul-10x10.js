@@ -3,13 +3,13 @@ import {core, glsl, grid2DInt, uniformArrayArgument, createShader} from "../shad
 const MatrixMul10x10 =
 `
 int index(int i, int j){
-    return i*10+j;
+    return i * 10 + j;
 }
    
 float core(){
-    float c = 0;
+    float c = 0.0;
     for(int k = 0; k < 100; ++k){
-        c = c + A[index(i,k)]*B[index(k,j)];
+        c = c + A[index(i, k)]*B[index(k, j)];
     }
     return c;
 }

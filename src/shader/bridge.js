@@ -15,28 +15,28 @@ function generateIndexes(name, axis, maxX, maxY) {
     };
 }
 
-export function bridge(grid, rest) {
+export function generateGrid(grid, rest) {
     if (!grid) return [];
     const X = typeof grid.maxX === 'function' ? grid.maxX(rest) : grid.maxX;
     const Y = typeof grid.maxY === 'function' ? grid.maxY(rest) : grid.maxY;
     return [
         generateIndexes(grid.nameX, 'x', X, Y),
-        generateIndexes(grid.nameX, 'y', X, Y)
+        generateIndexes(grid.nameY, 'y', X, Y)
     ]
 }
 
 export function computeParam(parameter, args) {
     return {
         ...parameter,
-        value: typeof parameter.value === 'function' ? parameter.value(...args) : typeof parameter.value,
-        size: typeof parameter.size === 'function' ? parameter.size(...args) : typeof parameter.size
+        value: typeof parameter.value === 'function' ? parameter.value(...args) : parameter.value,
+        size: typeof parameter.size === 'function' ? parameter.size(...args) : parameter.size
     }
 }
 
 export function computeArg(argument, args, index) {
     return {
         ...argument,
-        size: typeof argument.size === 'function' ? argument.size(...args) : typeof argument.size,
+        size: typeof argument.size === 'function' ? argument.size(...args) : argument.size,
         value: args[index]
     }
 }
