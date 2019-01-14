@@ -4,7 +4,7 @@
 
 
 export const shadowCanvas  = document.createElement('canvas');
-export const gl = shadowCanvas.getContext('2d');
+export const gl = shadowCanvas.getContext('webgl');
 
 export const ATTRIBUTE_PARAMETER = 'ATTRIBUTE_PARAMETER';
 export const ATTRIBUTE_ARGUMENT = 'ATTRIBUTE_ARGUMENT';

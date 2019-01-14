@@ -1,17 +1,26 @@
 /**
  * Created by anokhin on 20.04.2018.
  */
-import {createShader, attribute, uniform,uniformArrayArgument, core, uniformArgument, glsl, grid2DInt as grid} from './index.js';
+import {core, grid2DInt, uniform, uniformArgument, uniformArrayArgument, glsl, createShader} from "../shader/api";
+
+export const createEyeMatrix = n => {
+    const matrix = new Float32Array(n*n);
+    for(let i = 0; i < n; ++i){
+        const index = i*n + i;
+        matrix[index] = 1;
+    }
+};
 
 
-const matrixMul10x10 = createShader(
-    grid("i","j",100,100),
+
+export const matrixMul10x10 = createShader(
+    grid2DInt("i","j",100,100),
     uniformArrayArgument("A", glsl.FLOAT, 100),
     uniformArrayArgument("B", glsl.FLOAT, 100),
     core(glsl.FLOAT, `
    
        int index(int i, int j){
-          return i*100+j;
+          return i*10+j;
        }
    
        float core(){
@@ -24,10 +33,10 @@ const matrixMul10x10 = createShader(
    `)
 );
 
-matrixMul10x10(A, B);
 
-const matrixSquareMul = createShader(
-    grid("i", "j",A=>A.length, A=>A.length),
+
+export const matrixSquareMul = createShader(
+    grid2DInt("i", "j",A=>A.length, A=>A.length),
     uniform("size", glsl.INT, A => Math.sqrt(A.length)),
     uniformArrayArgument("A", glsl.FLOAT, A => A.length),
     uniformArrayArgument("B", glsl.FLOAT, A => A.length),
@@ -46,10 +55,10 @@ const matrixSquareMul = createShader(
    `)
 );
 
-matrixSquareMul(A, B);
 
-const matrixMul = createShader(
-    grid("i", "j", (A, B, n) => n, (A, B, n, l, m)=>m),
+
+export const matrixMul = createShader(
+    grid2DInt("i", "j", (A, B, n) => n, (A, B, n, l, m)=>m),
     uniformArrayArgument("A", glsl.FLOAT, (A, B, n, k) => n * k),
     uniformArrayArgument("B", glsl.FLOAT, (A, B, n, k, m) => k * m),
     uniformArgument("n", glsl.INT),
@@ -74,4 +83,4 @@ const matrixMul = createShader(
    `)
 );
 
-matrixMul(A, B, n, k, m);
+

@@ -1,10 +1,17 @@
 /**
  * Created by anokhin on 23.04.2018.
  */
-import {decodeReducedFloat, getFloat, decodeInt} from './encoders.js';
-import {glsl, ATTRIBUTE_PARAMETER, ATTRIBUTE_ARGUMENT, UNIFORM_PARAMETER, UNIFORM_ARRAY_PARAMETER, UNIFORM_ARGUMENT,UNIFORM_ARRAY_ARGUMENT}
-from './constants.js';
-import {WebGlCompiler,WebGlRunner} from "./webgl-utils";
+import {decodeInt, decodeReducedFloat, getFloat} from './encoders.js';
+import {
+    ATTRIBUTE_ARGUMENT,
+    ATTRIBUTE_PARAMETER,
+    glsl,
+    UNIFORM_ARGUMENT,
+    UNIFORM_ARRAY_ARGUMENT,
+    UNIFORM_ARRAY_PARAMETER,
+    UNIFORM_PARAMETER
+} from './constants.js';
+import {WebGlRunner} from "../webgl/webgl-runner";
 
 function extractFloat(bytes){
     return getFloat(decodeReducedFloat(bytes));
@@ -24,28 +31,6 @@ function extractValues(gl, type){
         values[i] = (type === glsl.FLOAT ? extractFloat([pix[i*4],pix[i*4+1],pix[i*4+2]]) : extractInt([pix[i*4],pix[i*4+1],pix[i*4+2]]));
     }
     return values;
-}
-
-export class ShaderCompiler{
-
-    constructor(gl){
-        this.gl = gl;
-    }
-
-    compile(code){
-        this.webglCompiler = new WebGlCompiler(this.gl,code,`
-            precision mediump float;
-            varying vec4 v_color;
-
-            void main(){
-              gl_FragColor = v_color;
-            }
-        `);
-    }
-
-    getProgram(){
-        this.webglCompiler.getProgram();
-    }
 }
 
 export class ShaderRunner {
