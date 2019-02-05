@@ -1,5 +1,5 @@
 const EncodeFloat =
-`
+    `
 vec4 _color_map_(float f){
     float exp_bits = 7.0;
     float mantissa_bits = 13.0;
@@ -10,9 +10,9 @@ vec4 _color_map_(float f){
     int mantissa = 0;
     if(exp < -126){
         exp = -126;
-        mantissa = int( round( abs(f) / pow(2.0, float(exp)) * mantissa_module)  );
+        mantissa = int( floor( abs(f) / pow(2.0, float(exp)) * mantissa_module)  );
     }else{
-        mantissa = int( round( (abs(f) / pow(2.0, float(exp)) - 1.0) * mantissa_module)  );
+        mantissa = int( floor( (abs(f) / pow(2.0, float(exp)) - 1.0) * mantissa_module)  );
     }
     bool expNegative = false;
     if(exp < 0){

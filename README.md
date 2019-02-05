@@ -3,6 +3,8 @@
 Light-weight library for parallel computations on GPU in browser. Based on WebGl 1.0.
 Current version - 0.0.1. NOT READY FOR ANY USE YET.
 
+
+
 # API
 
 
@@ -60,6 +62,10 @@ Current version - 0.0.1. NOT READY FOR ANY USE YET.
   max count of all uniform variables should be less than 4000. For massive computations data should be
   separated to different *shader-functions* and than aggregated in another *shader-funciton*. (Impossible
   to fix at all because of WebGL 1.0 constraints).
+ 
+ # TODO
+ 
+ rewrite compiler to make source code generation on each execution
  
 ## Examples
 

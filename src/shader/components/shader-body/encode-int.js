@@ -1,5 +1,5 @@
 const EncodeInt =
-`
+    `
 vec4 _color_map_(int n){
     bool sign = n < 0;
     int value = n;

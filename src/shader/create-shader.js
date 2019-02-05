@@ -16,7 +16,6 @@ import {ShaderCompiler} from "./core-transpiler/shader-compiler";
 import {generateGrid, computeArg, computeParam} from "./bridge";
 
 
-
 const argMarks = new Set([
     ATTRIBUTE_ARGUMENT,
     UNIFORM_ARGUMENT,
@@ -28,8 +27,8 @@ const shaderCompiler = new ShaderCompiler(gl);
 const shaderRunner = new ShaderRunner(gl);
 
 
-function configureShadowCanvas(grid){
-    if(!grid) return;
+function configureShadowCanvas(grid) {
+    if (!grid) return;
     shadowCanvas.width = grid[0].scale;
     shadowCanvas.height = grid[1].scale;
 }

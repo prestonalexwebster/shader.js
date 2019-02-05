@@ -4,7 +4,7 @@ import IntColorMap from "./int-color-map";
 
 
 const ShaderBody = (core) =>
-`
+    `
 ${core.source}
      
 ${core.type === glsl.FLOAT ? FloatColorMap : IntColorMap}

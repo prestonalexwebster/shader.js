@@ -4,7 +4,7 @@ import ShaderBody from "../shader-body/shader-body";
 
 
 const Vertex = (programParams, gridParams, core) =>
-`
+    `
 ${ShaderHeader(programParams)}
 
 ${GetPosition(gridParams)}

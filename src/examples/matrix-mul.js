@@ -3,8 +3,10 @@
  */
 import {core, createShader, glsl, grid2DInt, uniformArgument, uniformArrayArgument} from "../shader/api";
 
+
+
 const MatrixMul =
-`
+    `
 int indexA(int i, int j){
     return i * k + j;
 }
@@ -16,14 +18,16 @@ int indexB(int i, int j){
 float core(){
     float c = 0.0;
     for(int q = 0; q < k; ++q){
-        c = c + A[index(i, q)]*B[index(q, j)];
+        const int id1 = indexA(i, q);
+        const int id2 = indexB(q, j);
+        c = c + A[id1]*B[id2];
     }
     return c;
 }
 `;
 
 export const matrixMul = createShader(
-    grid2DInt("i", "j", (A, B, n) => n, (A, B, n, l, m)=>m),
+    grid2DInt("i", "j", (A, B, n) => n, (A, B, n, l, m) => m),
     uniformArrayArgument("A", glsl.FLOAT, (A, B, n, k) => n * k),
     uniformArrayArgument("B", glsl.FLOAT, (A, B, n, k, m) => k * m),
     uniformArgument("n", glsl.INT),

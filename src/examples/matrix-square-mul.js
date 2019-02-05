@@ -1,7 +1,7 @@
 import {core, glsl, grid2DInt, uniform, uniformArrayArgument, createShader} from "../shader/api";
 
 const MatrixSquareMul =
-`
+    `
 int index(int i, int j){
     return i * size + j;
 }
@@ -9,7 +9,9 @@ int index(int i, int j){
 float core(){
     float c = 0.0;
     for(int k = 0; k < size; ++k){
-        c = c + A[index(i, k)]*B[index(k, j)];
+        const int id1  = index(i, k);
+        const int id2 = index(k, j);
+        c = c + A[id1]*B[id2];
     }
     return c;
 }
